@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 906740355b5f1fc408f9855e668f3378
+guid: edf48692cf71a1d4a8c815cffbf201b4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -49,7 +49,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 100, y: 60, z: 136, w: 50}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Diver_HarpoonProjectile_0
+      name: Player_SwimKickBubbles_0
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
-        width: 65
-        height: 65
+        x: 55
+        y: 235
+        width: 250
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 569dbb16a89862941a3c2b3054c38901
-      internalID: 644232947
+      spriteID: 2a2ecc37b8e622a4aa877fac183049a4
+      internalID: 1528414698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_SwimKickBubbles_1
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 235
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb689404eaaa7a543850d06c9c1fc41f
+      internalID: 84944550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_SwimKickBubbles_2
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 235
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2a45044807ac244daecc01a3a66663d
+      internalID: 395480441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_SwimKickBubbles_3
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 235
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b5f51172833df04e9aaf6b91b429cba
+      internalID: -1778751548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_SwimKickBubbles_4
+      rect:
+        serializedVersion: 2
+        x: 1521
+        y: 235
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 205b8cdaecdb4504899fc78ef019fad6
+      internalID: -1778642013
       vertices: []
       indices: 
       edges: []
@@ -148,8 +236,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 00b6ff400ec01824d9631ca997468ecd
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -158,7 +246,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Diver_HarpoonProjectile_0: 644232947
+      Player_SwimKickBubbles_0: 1528414698
+      Player_SwimKickBubbles_1: 84944550
+      Player_SwimKickBubbles_2: 395480441
+      Player_SwimKickBubbles_3: -1778751548
+      Player_SwimKickBubbles_4: -1778642013
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

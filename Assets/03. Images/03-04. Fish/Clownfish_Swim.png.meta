@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 906740355b5f1fc408f9855e668f3378
+guid: 8a0dca4ca7ce3114796bd6ff4acfb2f5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -49,7 +49,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 100, y: 60, z: 136, w: 50}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Diver_HarpoonProjectile_0
+      name: Clownfish_Swim_0
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
-        width: 65
-        height: 65
+        x: 13
+        y: 250
+        width: 330
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 569dbb16a89862941a3c2b3054c38901
-      internalID: 644232947
+      spriteID: 332cc371633991a4cbc5c7b335ee4a07
+      internalID: -1347687538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clownfish_Swim_1
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 250
+        width: 330
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccb26729bd4d50d4bbb6069505118907
+      internalID: -685117648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clownfish_Swim_2
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 250
+        width: 330
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d935983d5f62e248b925de5d8ae28b3
+      internalID: 2042964766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clownfish_Swim_3
+      rect:
+        serializedVersion: 2
+        x: 1096
+        y: 250
+        width: 330
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9f3d602321c7e948a60fbe2605fc697
+      internalID: 1768320244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clownfish_Swim_4
+      rect:
+        serializedVersion: 2
+        x: 1454
+        y: 250
+        width: 330
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dc9809ef65a9704cb0d302c5cf1bbb5
+      internalID: -2052313874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Clownfish_Swim_5
+      rect:
+        serializedVersion: 2
+        x: 1824
+        y: 250
+        width: 330
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e14aa335ea3a1b4479fa93338a59de29
+      internalID: -2005369029
       vertices: []
       indices: 
       edges: []
@@ -148,8 +258,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: d6fa5c5a9b946bd40abf97f00fbe1abf
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -158,7 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Diver_HarpoonProjectile_0: 644232947
+      Clownfish_Swim_0: -1347687538
+      Clownfish_Swim_1: -685117648
+      Clownfish_Swim_2: 2042964766
+      Clownfish_Swim_3: 1768320244
+      Clownfish_Swim_4: -2052313874
+      Clownfish_Swim_5: -2005369029
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

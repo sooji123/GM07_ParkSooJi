@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 906740355b5f1fc408f9855e668f3378
+guid: 884d4be8a6f6d9149abb8890857981f4
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -49,7 +49,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 100, y: 60, z: 136, w: 50}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Diver_HarpoonProjectile_0
+      name: Diver_Animation_DiveUp_0
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
-        width: 65
-        height: 65
+        x: 37
+        y: 150
+        width: 300
+        height: 350
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 569dbb16a89862941a3c2b3054c38901
-      internalID: 644232947
+      spriteID: 47b449de5d0e5bb4c9dcbdfe7432a8f4
+      internalID: -395059926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Diver_Animation_DiveUp_1
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 150
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 688a275aad43d1541a387f50822f373c
+      internalID: -131231031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Diver_Animation_DiveUp_2
+      rect:
+        serializedVersion: 2
+        x: 766
+        y: 150
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb643ff76c26cfd42a085c0944a71cd3
+      internalID: 488831967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Diver_Animation_DiveUp_3
+      rect:
+        serializedVersion: 2
+        x: 1115
+        y: 150
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc3821edbede75949b6ddb11815f51c3
+      internalID: -1907818798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Diver_Animation_DiveUp_4
+      rect:
+        serializedVersion: 2
+        x: 1466
+        y: 150
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5db6d71a3cde73e44aea86720266cc68
+      internalID: 1335214422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Diver_Animation_DiveUp_5
+      rect:
+        serializedVersion: 2
+        x: 1836
+        y: 150
+        width: 300
+        height: 350
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3974132dc10b66d42a611f3c6328fa52
+      internalID: 712025055
       vertices: []
       indices: 
       edges: []
@@ -148,8 +258,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: 2046584680f687f4190a4a8646875de5
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -158,7 +268,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Diver_HarpoonProjectile_0: 644232947
+      Diver_Animation_DiveUp_0: -395059926
+      Diver_Animation_DiveUp_1: -131231031
+      Diver_Animation_DiveUp_2: 488831967
+      Diver_Animation_DiveUp_3: -1907818798
+      Diver_Animation_DiveUp_4: 1335214422
+      Diver_Animation_DiveUp_5: 712025055
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -3,47 +3,47 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 /// <summary>
-/// Sends a fixed world-space water-surface height to a fullscreen Shader Graph.
-/// The camera can follow the player without pinning the bright surface to the screen.
+/// 고정된 월드 좌표의 수면 높이를 전체 화면 셰이더 그래프에 전달합니다.
+/// 밝은 수면이 화면에 고정되지 않도록 하면서 카메라가 플레이어를 따라가게 합니다.
 /// </summary>
 [ExecuteAlways]
 public sealed class WorldSurfaceLightController : MonoBehaviour
 {
-    [Header("References")]
+    [Header("참조")]
     [SerializeField] private Camera targetCamera;
     [SerializeField] private Transform waterSurface;
-    [Tooltip("The material assigned to the URP Full Screen Pass Renderer Feature.")]
+    [Tooltip("URP Full Screen Pass Renderer Feature에 지정한 머티리얼입니다.")]
     [SerializeField] private Material targetMaterial;
-    [Tooltip("The global Volume that contains the Bloom override.")]
+    [Tooltip("Bloom 오버라이드가 포함된 전역 볼륨입니다.")]
     [SerializeField] private Volume postProcessVolume;
 
-    [Header("Fallback Surface Position")]
+    [Header("수면 참조가 없을 때 사용할 위치")]
     [SerializeField] private float surfaceWorldY = 20f;
     [SerializeField] private float worldPlaneZ;
 
-    [Header("Reveal Range (Viewport Y)")]
-    [Tooltip("The effect starts while the surface is still slightly above the screen.")]
+    [Header("표시 범위 (뷰포트 Y)")]
+    [Tooltip("수면이 화면보다 약간 위에 있을 때 효과가 시작됩니다.")]
     [SerializeField] private float revealStart = 1.2f;
-    [Tooltip("The effect reaches full strength when the surface enters this height.")]
+    [Tooltip("수면이 이 높이에 도달하면 효과가 최대 강도로 적용됩니다.")]
     [SerializeField] private float revealFull = 0.88f;
 
-    [Header("Surface Look")]
+    [Header("수면 표현")]
     [SerializeField, Min(0.001f)] private float whiteBandWidth = 0.015f;
     [SerializeField, Min(0.001f)] private float underwaterGlowHeight = 0.14f;
     [SerializeField, Range(0f, 1f)] private float glowStrength = 0.75f;
     [ColorUsage(true, true)]
     [SerializeField] private Color surfaceColor = new(2.2f, 2.8f, 3.2f, 1f);
 
-    [Header("World Y Depth Fog")]
-    [Tooltip("Optional. When empty, the camera Y position is used as the current ocean depth.")]
+    [Header("월드 Y 기준 수심 안개")]
+    [Tooltip("선택 사항입니다. 비워두면 카메라의 Y 좌표를 현재 수심 기준으로 사용합니다.")]
     [SerializeField] private Transform depthTarget;
-    [Tooltip("World Y position that is treated as the deepest part of the map.")]
+    [Tooltip("맵에서 가장 깊은 곳으로 취급할 월드 Y 좌표입니다.")]
     [SerializeField] private float deepWorldY = -30f;
     [ColorUsage(true, true)]
     [SerializeField] private Color shallowFogColor = new(0.4f, 1.4f, 2.2f, 1f);
     [SerializeField] private Color deepFogColor = new(0.02f, 0.18f, 0.38f, 1f);
 
-    [Header("World Y Bloom")]
+    [Header("월드 Y 기준 블룸")]
     [SerializeField, Min(0f)] private float shallowBloomIntensity = 1f;
     [SerializeField, Min(0f)] private float deepBloomIntensity = 0.1f;
 

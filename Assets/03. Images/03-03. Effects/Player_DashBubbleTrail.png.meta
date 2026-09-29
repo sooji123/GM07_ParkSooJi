@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 906740355b5f1fc408f9855e668f3378
+guid: cb734108e7b119a49b23e32e900afca6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -49,7 +49,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 100, y: 60, z: 136, w: 50}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Diver_HarpoonProjectile_0
+      name: Player_DashBubbleTrail_0
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
-        width: 65
-        height: 65
+        x: 78
+        y: 240
+        width: 250
+        height: 250
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,8 +138,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 569dbb16a89862941a3c2b3054c38901
-      internalID: 644232947
+      spriteID: ad3bf13df7c69f74ab9e546a6bc5ead8
+      internalID: 608886817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DashBubbleTrail_1
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 240
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78e3e31ae8266f547bbcd0306788d869
+      internalID: 779893976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DashBubbleTrail_2
+      rect:
+        serializedVersion: 2
+        x: 716
+        y: 240
+        width: 324
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c61cacc5a1733d42b54e037316cc9f6
+      internalID: -2113451572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DashBubbleTrail_3
+      rect:
+        serializedVersion: 2
+        x: 1566
+        y: 240
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37f44d3f476f9624b9e137af61a35fc1
+      internalID: -1563802054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_DashBubbleTrail_4
+      rect:
+        serializedVersion: 2
+        x: 1881
+        y: 240
+        width: 250
+        height: 249
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbde1a5a43811e444885d83af93f77b3
+      internalID: -1472928266
       vertices: []
       indices: 
       edges: []
@@ -148,8 +236,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: c019b78bd9afc4e4991a1d6ace230f15
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -158,7 +246,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Diver_HarpoonProjectile_0: 644232947
+      Player_DashBubbleTrail_0: 608886817
+      Player_DashBubbleTrail_1: 779893976
+      Player_DashBubbleTrail_2: -2113451572
+      Player_DashBubbleTrail_3: -1563802054
+      Player_DashBubbleTrail_4: -1472928266
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
