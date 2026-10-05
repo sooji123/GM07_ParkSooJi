@@ -17,6 +17,13 @@ public sealed class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        int playerLayer = LayerMask.NameToLayer("Player");
+        int fishLayer = LayerMask.NameToLayer("Fish");
+        if (playerLayer >= 0)
+            gameObject.layer = playerLayer;
+        if (playerLayer >= 0 && fishLayer >= 0)
+            Physics2D.IgnoreLayerCollision(playerLayer, fishLayer, true);
+
         input = GetComponent<PlayerInputReader>();
         motor = GetComponent<PlayerMotor>();
         aim = GetComponent<PlayerAim>();
