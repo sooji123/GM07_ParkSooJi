@@ -31,6 +31,8 @@ public sealed class HarpoonController : MonoBehaviour
     private float hitPushSpeed = 2.5f;
     [SerializeField]
     private HarpoonStruggleGauge struggleGauge;
+    [SerializeField]
+    private PlayerFishInventory inventory;
 
     public event Action AttackFinished;
     public event Action<RaycastHit2D> Hit;
@@ -51,6 +53,7 @@ public sealed class HarpoonController : MonoBehaviour
 
     private void Awake()
     {
+        if (inventory == null) inventory = GetComponent<PlayerFishInventory>();
         var visual = new GameObject("HarpoonRope");
         visual.transform.SetParent(transform, false);
         rope = visual.AddComponent<LineRenderer>();
@@ -179,7 +182,7 @@ public sealed class HarpoonController : MonoBehaviour
         switch (pendingFishResult)
         {
             case HarpoonHitResult.DirectCatch:
-                FishHooked?.Invoke(hookedFish);
+                ConfirmCatch();
                 state = HarpoonState.Returning;
                 break;
             case HarpoonHitResult.Struggle:
@@ -212,9 +215,23 @@ public sealed class HarpoonController : MonoBehaviour
     private void OnStruggleFinished(bool succeeded)
     {
         if (!IsAttacking || state != HarpoonState.Struggling) return;
-        if (succeeded) FishHooked?.Invoke(hookedFish);
+        if (succeeded) ConfirmCatch();
         else ReleaseHookedFish();
         state = HarpoonState.Returning;
+    }
+
+    private void ConfirmCatch()
+    {
+        if (hookedFish == null) return;
+
+        if (inventory != null && !inventory.CanStore(hookedFish.Data))
+        {
+            hookedFish.DieAtCapturedPosition();
+            hookedFish = null;
+            return;
+        }
+
+        FishHooked?.Invoke(hookedFish);
     }
 
     private void UpdateReturning()
@@ -237,7 +254,9 @@ public sealed class HarpoonController : MonoBehaviour
 
         if (caughtFish != null)
         {
-            caughtFish.CompleteCatch();
+            bool stored = inventory == null || inventory.TryStore(caughtFish.Data);
+            if (stored) caughtFish.CompleteCatch();
+            else caughtFish.DieAtCapturedPosition();
         }
 
         Cancel();

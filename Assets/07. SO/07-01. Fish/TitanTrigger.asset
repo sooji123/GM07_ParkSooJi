@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   fishName: "\uD0C0\uC774\uD0C4\uD2B8\uB9AC\uAC70"
   maxHealth: 33
-  weight: 5
+  weight: 10
   aggressive: 1

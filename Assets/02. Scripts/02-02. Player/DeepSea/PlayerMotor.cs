@@ -17,6 +17,7 @@ public sealed class PlayerMotor : MonoBehaviour
     private PlayerDiveStatus diveStatus;
     private Rigidbody2D body;
     private Vector2 anchorOffset;
+    private float carryWeightSpeedMultiplier = 1f;
     public bool IsSprinting { get; private set; }
 
     private void Awake()
@@ -34,7 +35,7 @@ public sealed class PlayerMotor : MonoBehaviour
     {
         IsSprinting = sprint && input.sqrMagnitude > 0.0001f
             && diveStatus != null && diveStatus.CurrentAir > 0f;
-        Vector2 velocity = Vector2.ClampMagnitude(input, 1f) * moveSpeed
+        Vector2 velocity = Vector2.ClampMagnitude(input, 1f) * moveSpeed * carryWeightSpeedMultiplier
             * (IsSprinting ? Mathf.Max(1f, sprintMultiplier) : 1f);
         if (movementBounds != null)
         {
@@ -69,6 +70,12 @@ public sealed class PlayerMotor : MonoBehaviour
         if (body == null) body = GetComponent<Rigidbody2D>();
         body.linearVelocity = Vector2.zero;
         body.angularVelocity = 0f;
+    }
+
+    /// <summary>보유 무게에 따른 이동속도 배율을 적용합니다.</summary>
+    public void SetCarryWeightSpeedMultiplier(float multiplier)
+    {
+        carryWeightSpeedMultiplier = Mathf.Clamp(multiplier, 0.1f, 1f);
     }
 
     private void OnDisable() => Stop();
