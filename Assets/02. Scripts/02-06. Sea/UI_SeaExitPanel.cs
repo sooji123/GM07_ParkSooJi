@@ -6,6 +6,8 @@ public class UI_SeaExitPanel : MonoBehaviour
     private GameObject exitPanel;
     [SerializeField]
     private ESceneName targetScene;
+    [SerializeField]
+    private PlayerFishInventory playerFishInventory;
 
     private bool isOpen;
 
@@ -38,7 +40,8 @@ public class UI_SeaExitPanel : MonoBehaviour
     public void ExitToBoat()
     {
         Time.timeScale = 1f;
-        SceneLoader.Load(targetScene);
+
+        GameFlow.CompleteDive(playerFishInventory.CaughtFish);
     }
     private void OnDisable()
     {

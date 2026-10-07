@@ -63,7 +63,7 @@ public class HoldSceneTransition : MonoBehaviour
             gaugeFill.fillAmount = 0f;
         }
 
-        if (interactionPanel != null)
+        if (interactionPanel != null && GameSession.Instance.CanDive)
         {
             interactionPanel.SetActive(true);
         }

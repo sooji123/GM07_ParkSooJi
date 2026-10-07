@@ -27,8 +27,6 @@ public class LoadingSceneController : MonoBehaviour
         {
             Debug.LogError("LoadingSceneController: 타겟 씬이 존재하지 않습니다.");
             yield break;
-
-            targetScene = ESceneName.TitleScene;
         }
         yield return LoadTargetScene(targetScene);
     }

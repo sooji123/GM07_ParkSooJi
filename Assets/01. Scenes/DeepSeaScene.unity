@@ -29899,6 +29899,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI_SeaExitPanel
   exitPanel: {fileID: 1741923934}
   targetScene: 1
+  playerFishInventory: {fileID: 1905493387}
 --- !u!1 &1745529672
 GameObject:
   m_ObjectHideFlags: 0
