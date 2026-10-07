@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d337f06841fe439bb1c1764c9722b619, type: 3}
   m_Name: DeepSeaCameraBounds
   m_EditorClassIdentifier: Assembly-CSharp::MovementBounds
-  min: {x: -4, y: -5}
-  max: {x: 1, y: 1.8}
+  min: {x: -3.8, y: -5}
+  max: {x: 1, y: 1.5}

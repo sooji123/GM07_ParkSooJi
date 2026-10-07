@@ -22,7 +22,13 @@ public sealed class PlayerDiveStatus : MonoBehaviour
     [SerializeField] private TMP_Text airText;
     [SerializeField] private TMP_Text depthText;
 
+    [Header("저산소 경고")]
+    [SerializeField, Min(0f)] private float lowAirThreshold = 30f;
+    [Tooltip("경고 이미지와 산소 텍스트가 한 번 어두워졌다 밝아지는 전체 시간입니다.")]
+    [SerializeField, Min(0.1f)] private float lowAirPulseDuration = 1f;
+
     [Header("피격 연출")]
+    [SerializeField] private GameObject warningImage;
     [SerializeField] private Image damageImage;
     [SerializeField] private SpriteRenderer playerRenderer;
     [SerializeField] private CameraDirector cameraDirector;
@@ -59,6 +65,7 @@ public sealed class PlayerDiveStatus : MonoBehaviour
             SetDamageImageAlpha(0f);
         }
         if (airText != null) normalAirTextColor = airText.color;
+        if (warningImage != null) warningImage.SetActive(false);
         CurrentAir = Mathf.Max(0.01f, maxAir);
         RefreshUI();
     }
@@ -163,7 +170,36 @@ public sealed class PlayerDiveStatus : MonoBehaviour
         SetDamageImageAlpha(0f);
     }
 
-    private void LateUpdate() => RefreshUI();
+    private void LateUpdate()
+    {
+        RefreshUI();
+        UpdateLowAirFeedback();
+    }
+
+    private void UpdateLowAirFeedback()
+    {
+        bool isLowAir = CurrentAir <= Mathf.Max(0f, lowAirThreshold);
+        if (warningImage != null)
+            warningImage.SetActive(isLowAir);
+
+        // 실제 피격 연출이 재생 중이면 해당 연출이 UI 색과 투명도를 제어합니다.
+        if (damageRoutine != null)
+            return;
+
+        if (!isLowAir)
+        {
+            if (airText != null) airText.color = normalAirTextColor;
+            SetDamageImageAlpha(0f);
+            return;
+        }
+
+        float duration = Mathf.Max(0.1f, lowAirPulseDuration);
+        float pulse = Mathf.PingPong(Time.unscaledTime * (2f / duration), 1f);
+        SetDamageImageAlpha(pulse);
+
+        if (airText != null)
+            airText.color = Color.Lerp(normalAirTextColor, damagedAirTextColor, pulse);
+    }
 
     private void RefreshUI()
     {
@@ -184,6 +220,7 @@ public sealed class PlayerDiveStatus : MonoBehaviour
             damageRoutine = null;
         }
         invincibilityEndTime = 0f;
+        if (warningImage != null) warningImage.SetActive(false);
         ResetDamageFeedback();
     }
 }
