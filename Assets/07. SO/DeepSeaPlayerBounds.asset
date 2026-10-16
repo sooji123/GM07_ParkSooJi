@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d337f06841fe439bb1c1764c9722b619, type: 3}
   m_Name: DeepSeaPlayerBounds
   m_EditorClassIdentifier: Assembly-CSharp::MovementBounds
-  min: {x: -8.5, y: -7.5}
-  max: {x: 5.5, y: 4}
+  min: {x: -8.5, y: -7}
+  max: {x: 12, y: 4}

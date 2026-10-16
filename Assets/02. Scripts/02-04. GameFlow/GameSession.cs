@@ -16,6 +16,11 @@ public class GameSession : Singletion<GameSession>
     [SerializeField, Min(0)]
     private int money;
 
+    [Header("Equipment Upgrades")]
+    [SerializeField, Min(0)] private int oxygenTankLevelIndex;
+    [SerializeField, Min(0)] private int storageLevelIndex;
+    [SerializeField, Min(0)] private int harpoonLevelIndex;
+
     private readonly List<FishData> fishStorage = new();
 
     public int Day => day;
@@ -35,6 +40,9 @@ public class GameSession : Singletion<GameSession>
         day = 1;
         phase = EDayPhase.Morning;
         money = 0;
+        oxygenTankLevelIndex = 0;
+        storageLevelIndex = 0;
+        harpoonLevelIndex = 0;
         fishStorage.Clear();
 
         NotifyStateChanged();
@@ -44,7 +52,7 @@ public class GameSession : Singletion<GameSession>
     {
         if (!CanDive)
         {
-            Debug.LogWarning( $"{phase} ½Ã°£¿¡´Â ´ÙÀÌºê¸¦ ¿Ï·áÇÒ ¼ö ¾ø½À´Ï´Ù.");
+            Debug.LogWarning($"{phase} ì‹œê°„ì—ëŠ” ë‹¤ì´ë¸Œë¥¼ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
             return false;
         }
 
@@ -60,7 +68,7 @@ public class GameSession : Singletion<GameSession>
     {
         if (!CanWorkAtSushi)
         {
-            Debug.LogWarning( "½º½ÃÁı ¿µ¾÷Àº Àú³á¿¡¸¸ ¿Ï·áÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+            Debug.LogWarning("ì €ë…ì—ë§Œ ìŠ¤ì‹œì§‘ ì˜ì—…ì„ ì™„ë£Œí•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
             return false;
         }
         money += Mathf.Max(0, earnedMoney);
@@ -82,6 +90,71 @@ public class GameSession : Singletion<GameSession>
         NotifyStateChanged();
     }
 
+    public void AdvanceTime()
+    {
+        switch (phase)
+        {
+            case EDayPhase.Morning:
+                phase = EDayPhase.Afternoon;
+                break;
+            case EDayPhase.Afternoon:
+                phase = EDayPhase.Evening;
+                break;
+            case EDayPhase.Evening:
+                day++;
+                phase = EDayPhase.Morning;
+                fishStorage.Clear();
+                break;
+        }
+
+        NotifyStateChanged();
+    }
+
+    public int GetUpgradeLevelIndex(EEquipmentUpgradeType type)
+    {
+        return type switch
+        {
+            EEquipmentUpgradeType.OxygenTank => oxygenTankLevelIndex,
+            EEquipmentUpgradeType.Storage => storageLevelIndex,
+            EEquipmentUpgradeType.Harpoon => harpoonLevelIndex,
+            _ => 0
+        };
+    }
+
+    public bool TryPurchaseUpgrade(EquipmentUpgradeData upgrade)
+    {
+        if (upgrade == null || upgrade.LevelCount == 0)
+            return false;
+
+        int currentIndex = GetUpgradeLevelIndex(upgrade.UpgradeType);
+        int nextIndex = currentIndex + 1;
+        if (nextIndex >= upgrade.LevelCount)
+            return false;
+
+        EquipmentUpgradeLevel nextLevel = upgrade.GetLevel(nextIndex);
+        if (nextLevel == null || money < nextLevel.Cost)
+            return false;
+
+        money -= nextLevel.Cost;
+        SetUpgradeLevelIndex(upgrade.UpgradeType, nextIndex);
+        NotifyStateChanged();
+        return true;
+    }
+
+    public bool TryConsumeFish(FishData fish)
+    {
+        if (fish == null)
+            return false;
+
+        int index = fishStorage.IndexOf(fish);
+        if (index < 0)
+            return false;
+
+        fishStorage.RemoveAt(index);
+        NotifyStateChanged();
+        return true;
+    }
+
     private void StoreFish(
         IReadOnlyList<FishData> caughtFish)
     {
@@ -94,6 +167,23 @@ public class GameSession : Singletion<GameSession>
             {
                 fishStorage.Add(fish);
             }
+        }
+    }
+
+    private void SetUpgradeLevelIndex(EEquipmentUpgradeType type, int index)
+    {
+        index = Mathf.Max(0, index);
+        switch (type)
+        {
+            case EEquipmentUpgradeType.OxygenTank:
+                oxygenTankLevelIndex = index;
+                break;
+            case EEquipmentUpgradeType.Storage:
+                storageLevelIndex = index;
+                break;
+            case EEquipmentUpgradeType.Harpoon:
+                harpoonLevelIndex = index;
+                break;
         }
     }
 

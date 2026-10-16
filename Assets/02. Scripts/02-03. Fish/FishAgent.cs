@@ -57,6 +57,7 @@ public sealed class FishAgent : MonoBehaviour
     private PlayerDiveStatus player;
     private Vector2 wanderDirection;
     private Vector2 wanderDestination;
+    private int previousWanderZone = -1;
     private bool hasWanderDestination;
     private bool resting;
     private float restTimer;
@@ -100,7 +101,12 @@ public sealed class FishAgent : MonoBehaviour
         if (player == null) player = FindFirstObjectByType<PlayerDiveStatus>();
     }
 
-    public void AssignArea(FishArea assignedArea) => area = assignedArea;
+    public void AssignArea(FishArea assignedArea)
+    {
+        area = assignedArea;
+        previousWanderZone = -1;
+        hasWanderDestination = false;
+    }
 
     public void AssignSchool(FishSchool assignedSchool)
     {
@@ -321,15 +327,16 @@ public sealed class FishAgent : MonoBehaviour
         float minimumDistance = Mathf.Max(0.1f, wanderDistance - wanderDistanceVariation);
         float maximumDistance = Mathf.Max(minimumDistance, wanderDistance + wanderDistanceVariation);
         float selectedDistance = Random.Range(minimumDistance, maximumDistance);
-        Vector2 bestPoint = area.ClampPoint(position + currentDirection * selectedDistance);
+        int excludedZone = previousWanderZone >= 0
+            ? previousWanderZone
+            : area.GetMovementZone(position);
+        int selectedZone = area.GetRandomMovementZoneExcept(excludedZone);
+        Vector2 bestPoint = area.RandomPointInMovementZone(selectedZone);
         float bestScore = float.NegativeInfinity;
 
         for (int i = 0; i < 16; i++)
         {
-            Vector2 randomDirection = Random.insideUnitCircle.normalized;
-            if (randomDirection.sqrMagnitude < 0.001f) continue;
-
-            Vector2 candidate = area.ClampPoint(position + randomDirection * selectedDistance);
+            Vector2 candidate = area.RandomPointInMovementZone(selectedZone);
             Vector2 offset = candidate - position;
             float actualDistance = offset.magnitude;
             if (actualDistance <= wanderArrivalDistance) continue;
@@ -343,6 +350,7 @@ public sealed class FishAgent : MonoBehaviour
         }
 
         wanderDestination = bestPoint;
+        previousWanderZone = selectedZone;
         Vector2 newDirection = wanderDestination - position;
         if (newDirection.sqrMagnitude > 0.001f) wanderDirection = newDirection.normalized;
         hasWanderDestination = true;

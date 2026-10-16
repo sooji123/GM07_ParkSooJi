@@ -15,13 +15,17 @@ public class TransferInteraction : MonoBehaviour
     [SerializeField]
     private Image transferPanelImage;
 
-    [Tooltip("TransferPanel �ٷ� �Ʒ��� �ִ� I_Space")]
+    [Tooltip("TransferPanel 바로 아래에 있는 I_Space")]
     [SerializeField]
     private GameObject firstSpaceIcon;
 
-    [Tooltip("TransferPanel �ٷ� �Ʒ��� �ִ� I_Sushi")]
+    [Tooltip("TransferPanel 바로 아래에 있는 I_Sushi")]
     [SerializeField]
     private GameObject sushiIcon;
+
+    [Tooltip("시간 제한 안내를 표시하는 공용 패널")]
+    [SerializeField]
+    private BoatExplanationPanel explanationPanel;
 
     [Header("Panel Alpha")]
     [SerializeField, Range(0f, 1f)]
@@ -36,10 +40,17 @@ public class TransferInteraction : MonoBehaviour
 
     private PlayerController_Boat nearbyPlayer;
     private InteractionStep currentStep;
+    private bool interactionAvailable;
+
+    private const string ClosedMessage = "스시집은 밤에만 운영할 수 있습니다.";
 
     private void Update()
     {
         if (nearbyPlayer == null) return;
+
+        RefreshAvailability();
+        if (!interactionAvailable) return;
+        if (BoatActionLock.IsLocked) return;
 
         Keyboard keyboard = Keyboard.current;
 
@@ -66,8 +77,49 @@ public class TransferInteraction : MonoBehaviour
         if (player == null) return;
 
         nearbyPlayer = player;
-        currentStep = InteractionStep.FirstPrompt;
+        RefreshAvailability(true);
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        PlayerController_Boat player = other.GetComponentInParent<PlayerController_Boat>();
 
+        if (player == null || player != nearbyPlayer) return;
+
+        nearbyPlayer = null;
+        interactionAvailable = false;
+        if (explanationPanel != null)
+        {
+            explanationPanel.Hide(this);
+        }
+        ResetInteraction();
+    }
+
+    private void RefreshAvailability(bool force = false)
+    {
+        bool canEnterSushi = GameSession.HasInstance && GameSession.Instance.CanWorkAtSushi;
+        if (!force && canEnterSushi == interactionAvailable)
+        {
+            return;
+        }
+
+        interactionAvailable = canEnterSushi;
+
+        if (!interactionAvailable)
+        {
+            ResetInteraction();
+            if (explanationPanel != null)
+            {
+                explanationPanel.Show(this, ClosedMessage);
+            }
+            return;
+        }
+
+        if (explanationPanel != null)
+        {
+            explanationPanel.Hide(this);
+        }
+
+        currentStep = InteractionStep.FirstPrompt;
         SetPanelAlpha(activeAlpha);
 
         if (firstSpaceIcon != null)
@@ -79,15 +131,6 @@ public class TransferInteraction : MonoBehaviour
         {
             sushiIcon.SetActive(false);
         }
-    }
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        PlayerController_Boat player = other.GetComponentInParent<PlayerController_Boat>();
-
-        if (player == null || player != nearbyPlayer) return;
-
-        nearbyPlayer = null;
-        ResetInteraction();
     }
     private void ShowSushiConfirmation()
     {
@@ -105,6 +148,12 @@ public class TransferInteraction : MonoBehaviour
     }
     private void LoadSushiScene()
     {
+        if (!GameSession.HasInstance || !GameSession.Instance.CanWorkAtSushi)
+        {
+            RefreshAvailability(true);
+            return;
+        }
+
         currentStep = InteractionStep.Loading;
 
         if (nearbyPlayer != null)

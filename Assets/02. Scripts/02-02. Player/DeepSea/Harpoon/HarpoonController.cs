@@ -16,7 +16,7 @@ public sealed class HarpoonController : MonoBehaviour
     private Transform tipVisual;
     [Header("공격")]
     [SerializeField, Min(0)]
-    private int attackPower = 10;
+    private int attackPower = 5;
     [Tooltip("피해 적용 후 남은 체력이 이 값 이하이면 연타 포획을 시작합니다.")]
     [SerializeField, Min(0)]
     private int struggleHealthThreshold = 10;
@@ -53,6 +53,10 @@ public sealed class HarpoonController : MonoBehaviour
 
     private void Awake()
     {
+        attackPower = Mathf.RoundToInt(EquipmentUpgradeData.GetCurrentValue(
+            EEquipmentUpgradeType.Harpoon,
+            attackPower
+        ));
         if (inventory == null) inventory = GetComponent<PlayerFishInventory>();
         var visual = new GameObject("HarpoonRope");
         visual.transform.SetParent(transform, false);

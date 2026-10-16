@@ -6,6 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public sealed class FishArea : MonoBehaviour
 {
+    public const int MovementZoneColumnCount = 3;
+    public const int MovementZoneRowCount = 2;
+    public const int MovementZoneCount = MovementZoneColumnCount * MovementZoneRowCount;
+
     [SerializeField] private BoxCollider2D movementBounds;
     [SerializeField] private List<FishAgent> individualFish = new();
     [SerializeField] private List<FishSchool> schools = new();
@@ -81,5 +85,68 @@ public sealed class FishArea : MonoBehaviour
             if (movementBounds.OverlapPoint(point)) return point;
         }
         return Center;
+    }
+
+    /// <summary>위치가 속한 좌·중·우 및 위·아래 이동 구역의 번호를 반환합니다.</summary>
+    public int GetMovementZone(Vector2 point)
+    {
+        if (movementBounds == null) return 0;
+
+        Bounds bounds = movementBounds.bounds;
+        float normalizedX = Mathf.InverseLerp(bounds.min.x, bounds.max.x, point.x);
+        float normalizedY = Mathf.InverseLerp(bounds.min.y, bounds.max.y, point.y);
+        int column = Mathf.Clamp(
+            Mathf.FloorToInt(normalizedX * MovementZoneColumnCount),
+            0,
+            MovementZoneColumnCount - 1
+        );
+        int row = Mathf.Clamp(
+            Mathf.FloorToInt(normalizedY * MovementZoneRowCount),
+            0,
+            MovementZoneRowCount - 1
+        );
+        return column * MovementZoneRowCount + row;
+    }
+
+    /// <summary>제외할 구역을 빼고 나머지 이동 구역 중 하나를 무작위로 선택합니다.</summary>
+    public int GetRandomMovementZoneExcept(int excludedZone)
+    {
+        if (excludedZone < 0 || excludedZone >= MovementZoneCount)
+            return Random.Range(0, MovementZoneCount);
+
+        int selected = Random.Range(0, MovementZoneCount - 1);
+        return selected >= excludedZone ? selected + 1 : selected;
+    }
+
+    /// <summary>지정한 3열 2행 이동 구역 안에서 무작위 위치를 반환합니다.</summary>
+    public Vector2 RandomPointInMovementZone(int zone)
+    {
+        if (movementBounds == null) return transform.position;
+
+        zone = Mathf.Clamp(zone, 0, MovementZoneCount - 1);
+        Bounds bounds = movementBounds.bounds;
+        int column = zone / MovementZoneRowCount;
+        int row = zone % MovementZoneRowCount;
+        float zoneWidth = bounds.size.x / MovementZoneColumnCount;
+        float zoneHeight = bounds.size.y / MovementZoneRowCount;
+        float minX = bounds.min.x + zoneWidth * column;
+        float maxX = minX + zoneWidth;
+        float minY = bounds.min.y + zoneHeight * row;
+        float maxY = minY + zoneHeight;
+
+        for (int i = 0; i < 12; i++)
+        {
+            Vector2 point = new(
+                Random.Range(minX, maxX),
+                Random.Range(minY, maxY)
+            );
+            if (movementBounds.OverlapPoint(point)) return point;
+        }
+
+        Vector2 zoneCenter = new(
+            (minX + maxX) * 0.5f,
+            (minY + maxY) * 0.5f
+        );
+        return ClampPoint(zoneCenter);
     }
 }

@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: TitanTrigger
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   fishName: "\uD0C0\uC774\uD0C4\uD2B8\uB9AC\uAC70"
-  maxHealth: 33
-  weight: 10
+  maxHealth: 32
+  weight: 3.8
   aggressive: 1
+  sellPrice: 180
+  fishIcon: {fileID: -2005056015, guid: fedd42c116cd76544838e92c639d5e2b, type: 3}
+  dishSprite: {fileID: 21300000, guid: 80278cea90eac214ab891e3583c380fb, type: 3}

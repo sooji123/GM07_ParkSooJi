@@ -30,7 +30,12 @@ public class PlayerController_Boat : MonoBehaviour
     {
         moveInput = 0f;
 
-        if (!CanMove || !Application.isFocused) return;
+        if (!CanMove || !Application.isFocused)
+        {
+            if (animator != null)
+                animator.SetBool("IsWalking", false);
+            return;
+        }
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null) return;

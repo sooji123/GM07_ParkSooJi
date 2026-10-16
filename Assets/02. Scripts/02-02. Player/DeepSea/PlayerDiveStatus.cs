@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public sealed class PlayerDiveStatus : MonoBehaviour
 {
     [Header("공기")]
-    [SerializeField, Min(0.01f)] private float maxAir = 100f;
+    [SerializeField, Min(0.01f)] private float maxAir = 80f;
     [SerializeField, Min(0f)] private float airPerSecond = 0.2f;
     [SerializeField, Min(0f)] private float sprintAirPerSecond = 0.8f;
     [Header("수심")]
@@ -54,6 +54,7 @@ public sealed class PlayerDiveStatus : MonoBehaviour
 
     private void Awake()
     {
+        maxAir = EquipmentUpgradeData.GetCurrentValue(EEquipmentUpgradeType.OxygenTank, maxAir);
         motor = GetComponent<PlayerMotor>();
         controller = GetComponent<PlayerController>();
         if (playerRenderer == null) playerRenderer = GetComponentInChildren<SpriteRenderer>(true);

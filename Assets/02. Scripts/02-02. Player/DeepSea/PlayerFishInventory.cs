@@ -11,7 +11,7 @@ public sealed class PlayerFishInventory : MonoBehaviour
     [SerializeField, Min(0f)] 
     private float overweightThreshold = 10f;
     [SerializeField, Min(0f)] 
-    private float maximumCarryWeight = 15f;
+    private float maximumCarryWeight = 10f;
     [SerializeField, Range(0.1f, 1f)] 
     private float overweightSpeedMultiplier = 0.65f;
 
@@ -35,6 +35,10 @@ public sealed class PlayerFishInventory : MonoBehaviour
 
     private void Awake()
     {
+        maximumCarryWeight = EquipmentUpgradeData.GetCurrentValue(
+            EEquipmentUpgradeType.Storage,
+            maximumCarryWeight
+        );
         if (playerMotor == null) playerMotor = GetComponent<PlayerMotor>();
         RecalculateWeight();
         RefreshState();
@@ -45,7 +49,7 @@ public sealed class PlayerFishInventory : MonoBehaviour
     {
         if (fishData == null) return false;
 
-        return CurrentWeight + Mathf.Max(0f, fishData.Weight) <= Mathf.Max(overweightThreshold, maximumCarryWeight) + 0.001f;
+        return CurrentWeight + Mathf.Max(0f, fishData.Weight) <= maximumCarryWeight + 0.001f;
     }
 
     /// <summary>보관 가능한 물고기를 저장하고 무게 효과와 UI를 갱신합니다.</summary>
@@ -76,7 +80,7 @@ public sealed class PlayerFishInventory : MonoBehaviour
         if (playerMotor != null)
             playerMotor.SetCarryWeightSpeedMultiplier(overweight ? overweightSpeedMultiplier : 1f);
         if (weightText != null) weightText.text = $"{CurrentWeight:0.0}";
-        if (weightLimitText != null) weightLimitText.text = $"/{overweightThreshold:0.0}kg";
+        if (weightLimitText != null) weightLimitText.text = $"/{maximumCarryWeight:0.0}kg";
     }
 
     private void OnValidate()
