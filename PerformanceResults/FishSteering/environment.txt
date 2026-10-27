@@ -1,0 +1,9 @@
+Unity=6000.3.11f1
+CPU=AMD Ryzen 5 5600 6-Core Processor 
+OS=Windows 11  (10.0.26200)
+Frames=1800
+Trials=11
+Seed=12345
+Refresh=every 9 simulated frames (ideal 60Hz, 0.15sec)
+Static dense positions, all 250 school fish active, editor batch CPU only
+Sink=(150161.50, 63665.79)

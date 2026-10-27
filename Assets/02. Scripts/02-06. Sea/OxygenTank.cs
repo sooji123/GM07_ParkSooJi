@@ -41,6 +41,8 @@ public sealed class OxygenTank : MonoBehaviour
 
         SetProgress(holdProgress + Time.deltaTime / Mathf.Max(0.1f, holdDuration));
         if (holdProgress >= 1f) CompleteInteraction();
+        else if (SoundManager.HasInstance)
+            SoundManager.Instance.RefreshSfxLoop(this, ESfx.GaugeCharging);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -68,6 +70,7 @@ public sealed class OxygenTank : MonoBehaviour
     {
         opened = true;
         nearbyPlayer.RefillAir();
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.ItemPickup);
         if (tankRenderer != null && openedSprite != null)
             tankRenderer.sprite = openedSprite;
 

@@ -87,6 +87,8 @@ public sealed class SushiShiftController : MonoBehaviour
 
         startHoldTime = holding ? startHoldTime + Time.deltaTime : 0f;
         float progress = Mathf.Clamp01(startHoldTime / startHoldDuration);
+        if (holding && progress < 1f && SoundManager.HasInstance)
+            SoundManager.Instance.RefreshSfxLoop(this, ESfx.GaugeCharging);
 
         if (startGauge != null)
             startGauge.fillAmount = progress;

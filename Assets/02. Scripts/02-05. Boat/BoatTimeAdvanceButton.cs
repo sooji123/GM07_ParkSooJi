@@ -53,6 +53,7 @@ public sealed class BoatTimeAdvanceButton : MonoBehaviour
         if (isTransitioning || BoatActionLock.IsLocked || !GameSession.HasInstance)
             return;
 
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.UI_Click);
         StartCoroutine(AdvanceTimeWithFade());
     }
 

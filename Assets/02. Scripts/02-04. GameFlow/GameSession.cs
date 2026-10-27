@@ -22,6 +22,7 @@ public class GameSession : Singletion<GameSession>
     [SerializeField, Min(0)] private int harpoonLevelIndex;
 
     private readonly List<FishData> fishStorage = new();
+    private readonly Dictionary<EEquipmentUpgradeType, EquipmentUpgradeData> upgradeDataByType = new();
 
     public int Day => day;
     public EDayPhase Phase => phase;
@@ -64,6 +65,21 @@ public class GameSession : Singletion<GameSession>
         return true;
     }
 
+    public bool FailDive()
+    {
+        if (!CanDive)
+        {
+            Debug.LogWarning($"{phase} 시간에는 다이브를 종료할 수 없습니다.");
+            return false;
+        }
+
+        fishStorage.Clear();
+        phase = phase == EDayPhase.Morning ? EDayPhase.Afternoon : EDayPhase.Evening;
+
+        NotifyStateChanged();
+        return true;
+    }
+
     public bool CompleteSushiShift(int earnedMoney)
     {
         if (!CanWorkAtSushi)
@@ -87,6 +103,7 @@ public class GameSession : Singletion<GameSession>
             return;
 
         money += amount;
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.MoneyEarned);
         NotifyStateChanged();
     }
 
@@ -121,10 +138,28 @@ public class GameSession : Singletion<GameSession>
         };
     }
 
+    public void RegisterUpgradeData(EquipmentUpgradeData upgradeData)
+    {
+        if (upgradeData == null)
+            return;
+
+        upgradeDataByType[upgradeData.UpgradeType] = upgradeData;
+    }
+
+    public bool TryGetUpgradeData(
+        EEquipmentUpgradeType type,
+        out EquipmentUpgradeData upgradeData)
+    {
+        return upgradeDataByType.TryGetValue(type, out upgradeData)
+            && upgradeData != null;
+    }
+
     public bool TryPurchaseUpgrade(EquipmentUpgradeData upgrade)
     {
         if (upgrade == null || upgrade.LevelCount == 0)
             return false;
+
+        RegisterUpgradeData(upgrade);
 
         int currentIndex = GetUpgradeLevelIndex(upgrade.UpgradeType);
         int nextIndex = currentIndex + 1;

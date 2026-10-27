@@ -79,7 +79,11 @@ public sealed class HarpoonStruggleGauge : MonoBehaviour
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard != null && keyboard.spaceKey.wasPressedThisFrame)
+        {
             SetAmount(amount + currentFillPerPress);
+            if (SoundManager.HasInstance)
+                SoundManager.Instance.PlaySfx(ESfx.FishStrugglePress);
+        }
 
         SetAmount(amount - decreasePerSecond * Time.unscaledDeltaTime);
         remainingTime -= Time.unscaledDeltaTime;

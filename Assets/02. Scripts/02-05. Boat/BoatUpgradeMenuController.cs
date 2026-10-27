@@ -67,6 +67,7 @@ public sealed class BoatUpgradeMenuController : MonoBehaviour
             playerController.CanMove = false;
 
         SetOpenState(true);
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.UI_Open);
         RefreshPanels();
     }
 
@@ -76,6 +77,7 @@ public sealed class BoatUpgradeMenuController : MonoBehaviour
             return;
 
         SetOpenState(false);
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.UI_Close);
         ReleasePlayer();
     }
 
@@ -85,7 +87,12 @@ public sealed class BoatUpgradeMenuController : MonoBehaviour
             return;
 
         if (GameSession.Instance.TryPurchaseUpgrade(panel.UpgradeData))
+        {
+            if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.Upgrade);
             RefreshPanels();
+        }
+        else if (SoundManager.HasInstance)
+            SoundManager.Instance.PlaySfx(ESfx.UI_Error);
     }
 
     private void RefreshPanels()

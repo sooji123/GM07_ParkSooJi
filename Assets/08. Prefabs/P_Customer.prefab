@@ -280,6 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerController
   spriteRenderer: {fileID: 6788854350710467821}
+  animator: {fileID: 0}
   orderImage: {fileID: 5477013946757030191}
   requestedFoodImage: {fileID: 1462695935800701534}
   coinImage: {fileID: 195225372678921657}
@@ -320,7 +321,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1.5}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 15, y: 15}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7698158438050569106
 CanvasRenderer:

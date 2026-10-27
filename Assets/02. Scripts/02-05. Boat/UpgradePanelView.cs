@@ -22,6 +22,8 @@ public sealed class UpgradePanelView : MonoBehaviour
     public void Bind(BoatUpgradeMenuController owner)
     {
         controller = owner;
+        RegisterUpgradeData();
+
         if (upgradeButton == null)
             upgradeButton = GetComponent<Button>();
 
@@ -45,6 +47,8 @@ public sealed class UpgradePanelView : MonoBehaviour
 
     public void Refresh()
     {
+        RegisterUpgradeData();
+
         if (upgradeData == null || !GameSession.HasInstance || upgradeData.LevelCount == 0)
             return;
 
@@ -72,6 +76,12 @@ public sealed class UpgradePanelView : MonoBehaviour
     private void OnUpgradeClicked()
     {
         controller?.TryPurchase(this);
+    }
+
+    private void RegisterUpgradeData()
+    {
+        if (upgradeData != null && GameSession.HasInstance)
+            GameSession.Instance.RegisterUpgradeData(upgradeData);
     }
 
     private static void UpdateLevelText(TMP_Text target, EquipmentUpgradeLevel level)

@@ -3535,7 +3535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameSession
   day: 1
   phase: 0
-  money: 30
+  money: 500
   oxygenTankLevelIndex: 0
   storageLevelIndex: 0
   harpoonLevelIndex: 0

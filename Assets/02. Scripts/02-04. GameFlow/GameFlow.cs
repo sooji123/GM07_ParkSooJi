@@ -34,6 +34,18 @@ public static class GameFlow
         );
     }
 
+    public static bool FailDive()
+    {
+        GameSession session = GameSession.Instance;
+
+        if (session == null || !session.FailDive())
+            return false;
+
+        return SceneLoader.Load(
+            ESceneName.BoatScene
+        );
+    }
+
     public static bool TryEnterSushi()
     {
         GameSession session = GameSession.Instance;

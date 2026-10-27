@@ -23,6 +23,7 @@ public sealed class SushiPlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private float moveInput;
+    private float footstepDistance;
     private float currentEnergy;
     private bool controlEnabled;
     private bool isSprinting;
@@ -60,6 +61,17 @@ public sealed class SushiPlayerController : MonoBehaviour
         Vector2 next = body.position;
         next.x += moveInput * speed * Time.fixedDeltaTime;
         next.x = Mathf.Clamp(next.x, minX, maxX);
+        float movedDistance = Mathf.Abs(next.x - body.position.x);
+        if (movedDistance > 0.0001f)
+        {
+            footstepDistance += movedDistance;
+            if (footstepDistance >= 1f)
+            {
+                footstepDistance %= 1f;
+                if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.Footstep);
+            }
+        }
+        else footstepDistance = 0f;
         body.MovePosition(next);
     }
 

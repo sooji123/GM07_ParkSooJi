@@ -10,7 +10,7 @@ public static class SceneLoader
         string sceneNameString = sceneName.ToString();
         string loadingName = ESceneName.LoadingScene.ToString();
 
-        if (!Application.CanStreamedLevelBeLoaded(sceneNameString))
+        if (!Application.CanStreamedLevelBeLoaded(sceneNameString) || !Application.CanStreamedLevelBeLoaded(loadingName))
         {
             Debug.LogError(
                 $"SceneLoader: '{sceneNameString}' 씬을 불러올 수 없습니다. " +
@@ -21,6 +21,14 @@ public static class SceneLoader
         }
         targetScene = sceneName;
         hasLoadRequest = true;
+        if (SoundManager.HasInstance)
+        {
+            ESfx sound = sceneName == ESceneName.DeepSeaScene ? ESfx.Dive
+                : sceneName == ESceneName.BoatScene &&
+                  SceneManager.GetActiveScene().name == ESceneName.DeepSeaScene.ToString()
+                    ? ESfx.Surface : ESfx.SceneTransition;
+            SoundManager.Instance.PlaySfx(sound);
+        }
         SceneManager.LoadScene(loadingName);
         return true;
     }

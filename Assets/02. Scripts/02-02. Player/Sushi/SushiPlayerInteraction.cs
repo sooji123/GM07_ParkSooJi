@@ -41,6 +41,7 @@ public sealed class SushiPlayerInteraction : MonoBehaviour
             return;
 
         carriedOrder = order;
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.ItemPickup);
         if (carriedFoodImage != null && order.Fish.DishSprite != null)
             carriedFoodImage.sprite = order.Fish.DishSprite;
         if (carriedFoodObject != null)
@@ -61,6 +62,7 @@ public sealed class SushiPlayerInteraction : MonoBehaviour
             if (!customer.TryReceive(carriedOrder))
                 continue;
 
+            if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.FoodServe);
             carriedOrder = null;
             HideCarriedFood();
             return;

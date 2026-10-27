@@ -90,6 +90,7 @@ public sealed class HarpoonController : MonoBehaviour
         travelled = 0f;
         state = HarpoonState.Flying;
         IsAttacking = true;
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.HarpoonFire);
         if (tipVisual != null)
         {
             tipVisual.position = start;
@@ -259,7 +260,11 @@ public sealed class HarpoonController : MonoBehaviour
         if (caughtFish != null)
         {
             bool stored = inventory == null || inventory.TryStore(caughtFish.Data);
-            if (stored) caughtFish.CompleteCatch();
+            if (stored)
+            {
+                caughtFish.CompleteCatch();
+                if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.FishCaught);
+            }
             else caughtFish.DieAtCapturedPosition();
         }
 
@@ -285,6 +290,7 @@ public sealed class HarpoonController : MonoBehaviour
         }
 
         pendingFishResult = fish.HitByHarpoon(attackPower, struggleHealthThreshold);
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.HarpoonHit);
         hookedFish = fish;
         travelled = Vector3.Distance(origin, tipPosition);
         hitPushTargetDistance = Mathf.Min(range, travelled + hitPushDistance);

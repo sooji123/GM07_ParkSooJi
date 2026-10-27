@@ -3,24 +3,29 @@ using UnityEngine.UI;
 
 public sealed class CookingOrderView : MonoBehaviour
 {
-    [SerializeField] private Image fishIcon;
     [SerializeField] private Image dishImage;
     [SerializeField] private Image gaugeFill;
+
+    [Header("Cooking Complete")]
+    [Tooltip("조리가 끝났을 때 스프라이트를 변경할 Image입니다.")]
+    [SerializeField] private Image completedImage;
+    [Tooltip("조리가 끝났을 때 표시할 스프라이트입니다.")]
+    [SerializeField] private Sprite completedSprite;
 
     private FoodOrder order;
     private float duration;
     private float elapsed;
+    private bool completedVisualApplied;
 
     public void Initialize(FoodOrder newOrder, float cookingDuration)
     {
         order = newOrder;
         duration = Mathf.Max(0.01f, cookingDuration);
         elapsed = 0f;
+        completedVisualApplied = false;
 
         if (gaugeFill != null)
             gaugeFill.fillAmount = 0f;
-        if (fishIcon != null && order.Fish.FishIcon != null)
-            fishIcon.sprite = order.Fish.FishIcon;
         if (dishImage != null && order.Fish.DishSprite != null)
             dishImage.sprite = order.Fish.DishSprite;
     }
@@ -36,7 +41,22 @@ public sealed class CookingOrderView : MonoBehaviour
         if (gaugeFill != null)
             gaugeFill.fillAmount = progress;
 
-        if (progress >= 1f)
-            order.State = FoodOrderState.Ready;
+        if (progress < 1f)
+            return;
+
+        order.State = FoodOrderState.Ready;
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.CookingComplete);
+        ApplyCompletedVisual();
+    }
+
+    private void ApplyCompletedVisual()
+    {
+        if (completedVisualApplied)
+            return;
+
+        completedVisualApplied = true;
+
+        if (completedImage != null && completedSprite != null)
+            completedImage.sprite = completedSprite;
     }
 }

@@ -18,6 +18,7 @@ public class UI_SeaExitPanel : MonoBehaviour
             return;
         }
         isOpen = true;
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.UI_Open);
         if (exitPanel != null)
         {
             exitPanel.SetActive(true);
@@ -34,6 +35,7 @@ public class UI_SeaExitPanel : MonoBehaviour
         if (exitPanel != null)
         {
             exitPanel.SetActive(false);
+            if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.UI_Cancel);
         }
         Time.timeScale = 1f;
     }

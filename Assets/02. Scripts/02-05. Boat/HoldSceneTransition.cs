@@ -55,6 +55,8 @@ public class HoldSceneTransition : MonoBehaviour
         }
 
         float progress = Mathf.Clamp01(holdTime / holdDuration);
+        if (holdingSpace && progress < 1f && SoundManager.HasInstance)
+            SoundManager.Instance.RefreshSfxLoop(this, ESfx.GaugeCharging);
 
         if (gaugeFill != null)
         {

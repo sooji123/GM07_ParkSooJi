@@ -31,6 +31,7 @@ public sealed class CookingManager : MonoBehaviour
         order.View = view;
         view.Initialize(order, cookingDuration);
         orders.Add(order);
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.CookingStart);
         return true;
     }
 

@@ -136,6 +136,9 @@ public sealed class CustomerController : MonoBehaviour
         deliveredOrder.State = FoodOrderState.Served;
         SetState(CustomerState.Eating);
 
+        if (SoundManager.HasInstance)
+            SoundManager.Instance.PlaySfx(ESfx.CustomerEating);
+
         if (orderImage != null && requestedFoodImage != null)
         {
             orderImage.SetActive(false);
@@ -175,6 +178,7 @@ public sealed class CustomerController : MonoBehaviour
             yield return new WaitForSeconds(eatDuration);
 
         int foodPrice = order.Fish.SellPrice;
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.OrderComplete);
 
         if (coinText != null)
             coinText.text = foodPrice.ToString();

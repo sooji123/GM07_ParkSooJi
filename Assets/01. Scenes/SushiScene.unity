@@ -1602,7 +1602,7 @@ MonoBehaviour:
   startGauge: {fileID: 351823313}
   startHoldDuration: 1.5
   timerGauge: {fileID: 1407955379}
-  shiftDuration: 30
+  shiftDuration: 60
   timerEndFill: 0.6
   playerController: {fileID: 739092916}
   customerSpawner: {fileID: 17588777}

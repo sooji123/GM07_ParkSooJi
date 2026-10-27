@@ -40,6 +40,12 @@ public sealed class EquipmentUpgradeData : ScriptableObject
 
     public static EquipmentUpgradeData Load(EEquipmentUpgradeType type)
     {
+        if (GameSession.HasInstance &&
+            GameSession.Instance.TryGetUpgradeData(type, out EquipmentUpgradeData registeredUpgrade))
+        {
+            return registeredUpgrade;
+        }
+
         EquipmentUpgradeData[] allUpgrades = Resources.LoadAll<EquipmentUpgradeData>("Upgrades");
         foreach (EquipmentUpgradeData upgrade in allUpgrades)
         {

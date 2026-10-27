@@ -41,6 +41,10 @@ public sealed class PlayerDiveStatus : MonoBehaviour
     [SerializeField, Min(0f)] private float damageShakeDuration = 0.25f;
     [SerializeField, Min(0f)] private float damageShakeStrength = 0.06f;
 
+    [Header("사망")]
+    [SerializeField] private GameObject deadPanel;
+    [SerializeField] private Button exitBoatButton;
+
     public float CurrentAir { get; private set; }
     public float CurrentDepth { get; private set; }
     public float MaxDepthReached { get; private set; }
@@ -51,6 +55,8 @@ public sealed class PlayerDiveStatus : MonoBehaviour
     private Coroutine damageRoutine;
     private Color damageImageColor;
     private Color normalAirTextColor;
+    private bool lowAirSoundPlayed;
+    private bool isDead;
 
     private void Awake()
     {
@@ -67,18 +73,25 @@ public sealed class PlayerDiveStatus : MonoBehaviour
         }
         if (airText != null) normalAirTextColor = airText.color;
         if (warningImage != null) warningImage.SetActive(false);
+        if (deadPanel != null) deadPanel.SetActive(false);
+        if (exitBoatButton != null) exitBoatButton.onClick.AddListener(ExitToBoatAfterDeath);
         CurrentAir = Mathf.Max(0.01f, maxAir);
+        lowAirSoundPlayed = false;
         RefreshUI();
     }
 
     private void FixedUpdate()
     {
+        if (isDead)
+            return;
+
         // 상태 갱신 뒤 처리하며, 정지·조준·공격 중에는 기본 소모만 적용합니다.
         bool sprinting = motor.IsSprinting && controller != null
             && controller.isActiveAndEnabled && controller.State == PlayerState.Move;
         float rate = Mathf.Max(0f, airPerSecond)
             + (sprinting ? Mathf.Max(0f, sprintAirPerSecond) : 0f);
         CurrentAir = ConsumeAir(CurrentAir, rate, Time.fixedDeltaTime);
+        CheckAirDepleted();
     }
 
     public static float ConsumeAir(float air, float rate, float deltaTime)
@@ -91,6 +104,7 @@ public sealed class PlayerDiveStatus : MonoBehaviour
     public void RefillAir()
     {
         CurrentAir = Mathf.Max(0.01f, maxAir);
+        lowAirSoundPlayed = false;
         RefreshUI();
     }
 
@@ -98,7 +112,37 @@ public sealed class PlayerDiveStatus : MonoBehaviour
     public void ReduceAir(float amount)
     {
         CurrentAir = Mathf.Max(0f, CurrentAir - Mathf.Max(0f, amount));
+        CheckAirDepleted();
         RefreshUI();
+    }
+
+    private void CheckAirDepleted()
+    {
+        if (isDead || CurrentAir > 0f)
+            return;
+
+        isDead = true;
+
+        if (controller != null)
+            controller.enabled = false;
+        if (deadPanel != null)
+            deadPanel.SetActive(true);
+
+        Time.timeScale = 0f;
+    }
+
+    private void ExitToBoatAfterDeath()
+    {
+        if (!isDead)
+            return;
+
+        Time.timeScale = 1f;
+
+        if (exitBoatButton != null)
+            exitBoatButton.interactable = false;
+
+        if (!GameFlow.FailDive() && exitBoatButton != null)
+            exitBoatButton.interactable = true;
     }
 
     /// <summary>무적 상태가 아닐 때 피해와 피격 연출을 적용합니다.</summary>
@@ -107,6 +151,7 @@ public sealed class PlayerDiveStatus : MonoBehaviour
         if (amount <= 0f || IsInvincible) return false;
 
         ReduceAir(amount);
+        if (SoundManager.HasInstance) SoundManager.Instance.PlaySfx(ESfx.PlayerDamage);
         invincibilityEndTime = Time.time + Mathf.Max(0f, invincibilityDuration);
         if (cameraDirector != null)
             cameraDirector.Shake(damageShakeDuration, damageShakeStrength);
@@ -180,6 +225,9 @@ public sealed class PlayerDiveStatus : MonoBehaviour
     private void UpdateLowAirFeedback()
     {
         bool isLowAir = CurrentAir <= Mathf.Max(0f, lowAirThreshold);
+        if (isLowAir && !lowAirSoundPlayed && SoundManager.HasInstance)
+            SoundManager.Instance.PlaySfx(ESfx.OxygenWarning);
+        lowAirSoundPlayed = isLowAir;
         if (warningImage != null)
             warningImage.SetActive(isLowAir);
 
@@ -223,5 +271,14 @@ public sealed class PlayerDiveStatus : MonoBehaviour
         invincibilityEndTime = 0f;
         if (warningImage != null) warningImage.SetActive(false);
         ResetDamageFeedback();
+
+        if (isDead)
+            Time.timeScale = 1f;
+    }
+
+    private void OnDestroy()
+    {
+        if (exitBoatButton != null)
+            exitBoatButton.onClick.RemoveListener(ExitToBoatAfterDeath);
     }
 }
